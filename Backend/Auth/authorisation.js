@@ -37,7 +37,7 @@ export const login = async (req , res ) => {
 
 export const register = async (req ,res )=>{
     try {
-        const {username,email,password}=req.body
+        const {username,email,password,phone_number,role}=req.body
 
         //check if user exist
         const userexist= await User.findOne({message:{email}})
@@ -52,13 +52,17 @@ export const register = async (req ,res )=>{
         const user =await User.create({
             username,
             email,
-            password :hashedpassword
+            password :hashedpassword,
+            phone_number,
+            role
         })
 
         res.status(201).json({
             id: user.id,
             username:user.username,
-            email:user.email
+            email:user.email,
+            phone_number:user.phone_number,
+            role:user.role
         })
     } catch (error) {
         res.status(500).json({message:error.message})
