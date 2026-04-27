@@ -51,6 +51,21 @@ export const getOfferById = async (req, res) => {
   }
 };
 
-export const deleteOffer = async (req,res)=>{
-    
+export const removeOffer = async (req,res)=>{
+    try {
+        const deleteOffer = await db.Offer.destroy(req.body)
+        res.status(204).json(deleteOffer)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+export const updateOffer =async(req,res)=>{
+    try {
+        const updatedOffer = await db.Offer.findByPk(req.params.id)
+        await updatedOffer.update(req.body)
+        res.status(200).json(updatedOffer)
+    } catch (error) {
+        res.status(500).json(error)
+    }
 }
