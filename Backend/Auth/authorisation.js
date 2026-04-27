@@ -68,13 +68,3 @@ export const register = async (req ,res )=>{
         res.status(500).json({message:error.message})
     }
 }
-
-export const getUserById = async (req ,res)=>{
-    try {
-        const getuser= await User.findByPK(req.params.id)
-        res.status(200).json(getuser)
-    } catch (error) {
-        res.status(500)
-        throw new Error(error.message) 
-    }
-}
