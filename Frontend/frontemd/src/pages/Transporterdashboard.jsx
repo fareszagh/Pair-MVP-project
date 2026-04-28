@@ -1,9 +1,11 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-const Transporterdashboard = () => {
+import Statsbartransporter from "../components/Statsbartransporter.jsx";
+import Navbar from "../components/navbar.jsx";
+
+const Transporterdashboard = ({ user, token, handleLogout }) => {
   const [data, setData] = useState([]);
+  const [offer,setOffer]=useState([])
 
   useEffect(() => {
     axios
@@ -11,34 +13,34 @@ const Transporterdashboard = () => {
       .then((res) => setData(res.data))
       .catch((error) => console.error(error));
   }, []);
+  const applied = offer.reduce((acc, o) => acc + (o.OfferApps?.length || 0), 0)
+  const accepted = offer.reduce((acc, o) => {
+    return (
+      acc + (o.OfferApps?.filter((a) => a.status === "accepted").length || 0)
+    );
+  }, 0);
 
   return (
-    <div>
-        <h3>Avialable offers</h3>
-      {data.map((offer) => (
-        <div key={offer.id}>
-          <p>
-            <strong>Offer title</strong> {offer.title}
-          </p>
-          <p>
-            <strong>Offer description</strong> {offer.description}
-          </p>
-          <p>
-            <strong>Offer start Point</strong> {offer.start_point}
-          </p>
-          <p>
-            <strong>Offer Endpoint</strong> {offer.end_point}
-          </p>
-          <p>
-            <strong>Offer weight</strong> {offer.weight}
-          </p>
-          <p>
-            <strong>Offer height</strong> {offer.height}
-          </p>
+    <div className="dash-root">
+      <Navbar user={user} handleLogout={handleLogout} />
+      <main className="dash-main">
+        <div className="dash-header">
+          <div>
+            <p className="dash-greeting">Welcome back,</p>
+            <h1 className="dash-title">{user?.username}</h1>
+          </div>
+          <button className="btn-create" onClick={() => setShowCreate(true)}>
+            Search
+          </button>
         </div>
-      ))}
-      <h3>My Applications</h3>
-      
+
+        <Statsbartransporter
+          applied={applied}
+          accepted={accepted}
+          //rejected={rejected}
+        />
+
+      </main>
     </div>
   );
 };
