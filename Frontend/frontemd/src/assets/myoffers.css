@@ -1,0 +1,162 @@
+.offer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  max-height: 540px;
+  padding-right: 2px;
+}
+
+.offer-list::-webkit-scrollbar { width: 3px; }
+.offer-list::-webkit-scrollbar-track { background: transparent; }
+.offer-list::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 3px; }
+
+.offer-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px 13px;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s, transform 0.15s;
+  background: var(--surface-2);
+  position: relative;
+  overflow: hidden;
+  animation: card-in 0.4s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+.offer-card:nth-child(1) { animation-delay: 0.05s; }
+.offer-card:nth-child(2) { animation-delay: 0.10s; }
+.offer-card:nth-child(3) { animation-delay: 0.15s; }
+.offer-card:nth-child(4) { animation-delay: 0.20s; }
+.offer-card:nth-child(5) { animation-delay: 0.25s; }
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Left accent bar on hover/select */
+.offer-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 12%; bottom: 12%;
+  width: 2.5px;
+  border-radius: 0 2px 2px 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform 0.2s cubic-bezier(0.22,1,0.36,1);
+  transform-origin: center;
+}
+
+.offer-card:hover::before,
+.offer-card.selected::before { transform: scaleY(1); }
+
+.offer-card:hover {
+  border-color: var(--border-md);
+  background: var(--surface-3);
+}
+
+.offer-card.selected {
+  border-color: var(--border-glow);
+  background: linear-gradient(135deg, rgba(234,179,8,0.08) 0%, var(--surface-2) 100%);
+  box-shadow: 0 0 0 1px rgba(234,179,8,0.1), inset 0 1px 0 rgba(234,179,8,0.06);
+}
+
+.offer-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.offer-route {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.route-arrow {
+  color: var(--accent);
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+.offer-title {
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.offer-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background: var(--surface-3);
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+}
+
+.meta-tag svg { font-size: 10px; opacity: 0.7; }
+
+.applicant-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: var(--radius-xs);
+  font-size: 11.5px;
+  font-weight: 600;
+  background: var(--surface-3);
+  color: var(--ink-muted);
+  border: 1px solid var(--border);
+  margin-left: auto;
+  transition: all 0.15s;
+}
+
+.applicant-badge.has-apps {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: rgba(234,179,8,0.2);
+}
+
+.btn-delete {
+  width: 26px; height: 26px;
+  border-radius: var(--radius-xs);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  opacity: 0;
+}
+
+.offer-card:hover .btn-delete { opacity: 1; }
+
+.btn-delete:hover {
+  background: var(--danger-dim);
+  border-color: var(--danger-bd);
+  color: var(--danger);
+}
