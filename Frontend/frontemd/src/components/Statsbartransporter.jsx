@@ -1,10 +1,10 @@
 import "../assets/statsbar.css"
 
-export default function StatsBar({ Applied,Accepted,Rejected }) {
+export default function StatsBar({ applied=0,accepted=0,rejected=0 }) {
   const stats = [
-    { label: "Applied",       value: Applied,      accent: false },
-    { label: "Accepted", value: Accepted,  accent: false },
-    { label: "Rejected",         value: Rejected,         accent: false  },
+    { label: "Applied",       value: applied,      accent: false },
+    { label: "Accepted", value: accepted,  accent: false },
+    { label: "Rejected",         value: rejected,         accent: false  },
   ]
 
   return (
