@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap');
+
+/* Shares :root variables with Login.css — load Login.css first, or duplicate :root here */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+  font-family: 'Instrument Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Background, brand, card, field, input, eye-btn, submit-btn, spinner,
+   form-switch, switch-link — all inherited from Login.css */
+
+/* ─── Register-only: role cards ──────────────────── */
+.role-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.role-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 14px 14px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-md);
+  background: var(--surface-2);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+
+.role-card:hover:not(.selected) {
+  border-color: rgba(10,10,15,0.22);
+  background: var(--surface);
+}
+
+.role-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+  box-shadow: 0 0 0 3px rgba(26,86,219,0.10);
+}
+
+.role-svg {
+  width: 26px; height: 26px;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+  transition: color 0.18s;
+}
+
+.role-card.selected .role-svg { color: var(--accent); }
+
+.role-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  transition: color 0.18s;
+}
+
+.role-card.selected .role-label { color: var(--accent-2); }
+
+.role-desc {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  line-height: 1.4;
+  transition: color 0.18s;
+}
+
+.role-card.selected .role-desc { color: #4b79d4; }
+
+.role-check {
+  position: absolute;
+  top: 10px; right: 12px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ─── Field row (2 columns) ──────────────────────── */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.field-row .field { margin-bottom: 0.9rem; }
+
+/* ─── Password strength ──────────────────────────── */
+.strength-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 7px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 100px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.str-weak   { background: var(--danger); }
+.str-fair   { background: #e6920a; }
+.str-strong { background: #1a7f5a; }
+
+.strength-label {
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  min-width: 36px;
+  font-weight: 500;
+}
+
+/* ─── react-icons sizing ─────────────────────────── */
+.role-icon {
+  font-size: 26px;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+  transition: color 0.18s;
+}
+
+.role-card.selected .role-icon { color: var(--accent); }
+
+.role-check-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  color: var(--accent);
+}
