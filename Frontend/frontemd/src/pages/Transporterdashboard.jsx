@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "../components/navbar.jsx";
 import Statsbartransporter from "../components/Statsbartransporter.jsx";
 import AvailableOffer from "../components/AvailableOffers.jsx";
-import ApplicantsList from "../components/applicantlist.jsx";
+import MyApplications from "../components/MyApplications.jsx";
 import "../assets/dashboard.css";
 
 export default function Dashboard({ user, token, handleLogout }) {
@@ -65,6 +65,8 @@ export default function Dashboard({ user, token, handleLogout }) {
 
   const accepted = myApplications.filter((a) => a.status === "accepted").length;
 
+  const rejected = myApplications.filter((a)=> a.status === "rejected").length;
+
   return (
     <div className="dash-root">
       <Navbar user={user} handleLogout={handleLogout} />
@@ -78,9 +80,9 @@ export default function Dashboard({ user, token, handleLogout }) {
         </div>
 
         <Statsbartransporter
-          totalOffers={offers.length}
-          totalApplicants={totalApplicants}
+          Applied={applied}
           accepted={accepted}
+          Rejected={rejected}
         />
 
         <div className="dash-body">
@@ -89,23 +91,13 @@ export default function Dashboard({ user, token, handleLogout }) {
             loading={loadingOffers}
             selectedOffer={selectedOffer}
             onSelect={setSelectedOffer}
-            onDelete={handleDeleteOffer}
           />
-          <ApplicantsList
-            offer={selectedOffer}
-            applicants={applicants}
-            loading={loadingApps}
-            onUpdateStatus={handleUpdateStatus}
+          <MyApplications
+            applications={myApplications}
+            loading={loadingOffers}            
           />
         </div>
       </main>
-
-      {showCreate && (
-        <CreateOfferModal
-          onSubmit={handleCreateOffer}
-          onClose={() => setShowCreate(false)}
-        />
-      )}
     </div>
   );
 }
