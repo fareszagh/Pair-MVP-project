@@ -1,6 +1,7 @@
 import { FiPackage, FiTrash2, FiBox } from "react-icons/fi"
 import "../assets/myoffers.css"
-export default function AvailableOffers({ offers, loading, selectedOffer, onSelect, onDelete }) {
+export default function AvailableOffers({ offers,loading,selectedOffer,onSelect,onApply }) {
+
 
   if (loading) {
     return (
@@ -59,6 +60,10 @@ export default function AvailableOffers({ offers, loading, selectedOffer, onSele
                 <span className={`applicant-badge ${offer.OfferApps?.length > 0 ? "has-apps" : ""}`}>
                   {offer.OfferApps?.length || 0} applicant{offer.OfferApps?.length !== 1 ? "s" : ""}
                 </span>
+                {onApply && (
+                <button className="btn-accept" onClick={(e)=>{e.stopPropagation();onApply(offer.id)}}
+                ></button>
+                ) }
               </div>
             </div>
           ))}

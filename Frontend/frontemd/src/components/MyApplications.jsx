@@ -7,7 +7,7 @@ const statusColors = {
   rejected: "status-rejected",
 };
 
-export default function MyApplications({ applications, loading }) {
+export default function MyApplications({applications,loading }) {
 
   if (loading) {
     return (
@@ -45,7 +45,7 @@ export default function MyApplications({ applications, loading }) {
             {/* TOP */}
             <div className="applicant-top">
               <div>
-                <p className="applicant-name">{app.title}</p>
+                <p className="applicant-name">{app.Offer.title}</p>
 
                 <span className={`status-badge ${statusColors[app.status]}`}>
                   {app.status}
@@ -57,18 +57,18 @@ export default function MyApplications({ applications, loading }) {
             <div className="applicant-message">
               <FiMapPin className="msg-icon" />
               <p>
-                {app.start_point} → {app.end_point}
+                {app.Offer.start_point} → {app.Offer.end_point}
               </p>
             </div>
 
             {/* PHONE (only if accepted) */}
-            {app.status === "accepted" && app.phone_number && (
+            {app.Offer.status === "accepted" && app.Offer.phone_number && (
               <div className="applicant-contact">
                 <a
-                  href={`tel:${app.phone_number}`}
+                  href={`tel:${app.Offer.phone_number}`}
                   className="contact-link"
                 >
-                  <FiPhone /> {app.phone_number}
+                  <FiPhone /> {app.Offer.phone_number}
                 </a>
               </div>
             )}

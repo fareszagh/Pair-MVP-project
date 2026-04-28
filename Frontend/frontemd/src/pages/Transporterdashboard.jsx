@@ -9,12 +9,13 @@ import "../assets/dashboard.css";
 export default function Dashboard({ user, token, handleLogout }) {
   const [offers, setOffers] = useState([]);
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const [applicants, setApplicants] = useState([]);
+  const [myApplications, setMyApplication] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [loadingOffers, setLoadingOffers] = useState(true);
   const [loadingApps, setLoadingApps] = useState(false);
   const [refresh, setRefresh] = useState(false);
-
+  const [offerId, setOfferId] = useState(null);
+  const [messageBody, setMessageBody] = useState("i can handle this offer");
   const authHeader = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {
@@ -38,34 +39,51 @@ export default function Dashboard({ user, token, handleLogout }) {
   }, [refresh]);
 
   useEffect(() => {
-    if (!selectedOffer) return;
-    const fetchApplicants = async () => {
+    const fetchmyapplications = async () => {
       setLoadingApps(true);
       try {
         const { data } = await axios.get(
-          `http://localhost:3000/api/offer/${selectedOffer.id}/applications`,
+          "http://localhost:3000/api/offer/applications/me",
           authHeader,
         );
-        setApplicants(data);
-      } catch (err) {
-        console.log(err);
-        setApplicants([]);
+        setMyApplication(data);
+        console.log(myApplications)
+      } catch (error) {
+        console.log(error);
       } finally {
         setLoadingApps(false);
       }
     };
-    fetchApplicants();
-  }, [selectedOffer, refresh]);
+    fetchmyapplications();
+  }, [refresh]);
 
-  const myApplications = offers.flatMap((o) =>
-    (o.OfferApps || []).filter((a) => a.transporter_id === user.id),
-  );
+  const handleApply = async (offerId) => {
+  try {
+    await applyToApplication(offerId, messageBody);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+  const applyToApplication = async (offerId,messageBody) => {
+    try {
+      setOfferId(offerId);
+      await axios.post(
+        `http://localhost:3000/api/offer/${offerId}/applications`,
+        { message: messageBody },
+        authHeader,
+      );
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const applied = myApplications.length;
 
   const accepted = myApplications.filter((a) => a.status === "accepted").length;
 
-  const rejected = myApplications.filter((a)=> a.status === "rejected").length;
+  const rejected = myApplications.filter((a) => a.status === "rejected").length;
 
   return (
     <div className="dash-root">
@@ -80,9 +98,9 @@ export default function Dashboard({ user, token, handleLogout }) {
         </div>
 
         <Statsbartransporter
-          Applied={applied}
+          applied={applied}
           accepted={accepted}
-          Rejected={rejected}
+          rejected={rejected}
         />
 
         <div className="dash-body">
@@ -91,10 +109,11 @@ export default function Dashboard({ user, token, handleLogout }) {
             loading={loadingOffers}
             selectedOffer={selectedOffer}
             onSelect={setSelectedOffer}
+            onApply={handleApply}
           />
           <MyApplications
             applications={myApplications}
-            loading={loadingOffers}            
+            loading={loadingOffers}
           />
         </div>
       </main>
