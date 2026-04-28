@@ -1,6 +1,6 @@
 import {Router} from "express"
 import AuthMiddleware from "../Middleware/authMiddleware.js"
-import { createOffer, getAllOffers, getOfferById, removeOffer, updateOffer } from "../Controllers/offerController"
+import { createOffer, getAllOffers, getOfferById, removeOffer, updateOffer } from "../Controllers/offerController.js"
 
 const router = Router()
 
