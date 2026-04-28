@@ -11,6 +11,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
+  overflow: hidden;
 }
 
 .navbar::after {
@@ -19,6 +20,18 @@
   bottom: 0; left: 5%; right: 5%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border-md), transparent);
+}
+
+.navbar::before {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  top: -160px;
+  right: -70px;
+  background: radial-gradient(circle, rgba(234,179,8,0.12) 0%, transparent 72%);
+  pointer-events: none;
 }
 
 .navbar-brand {
@@ -39,6 +52,14 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 0 16px rgba(234,179,8,0.4);
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .brand-name {

@@ -47,8 +47,24 @@
   transform-origin: center;
 }
 
+.offer-card::after {
+  content: '';
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  top: -70px;
+  right: -70px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234,179,8,0.08) 0%, transparent 72%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
 .offer-card:hover::before,
 .offer-card.selected::before { transform: scaleY(1); }
+
+.offer-card:hover::after,
+.offer-card.selected::after { opacity: 1; }
 
 .offer-card:hover {
   border-color: var(--border-md);

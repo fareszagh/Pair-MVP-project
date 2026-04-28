@@ -18,6 +18,15 @@
 /* Background, brand, card, field, input, eye-btn, submit-btn, spinner,
    form-switch, switch-link — all inherited from Login.css */
 
+.brand-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 10px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 8px 14px rgba(26, 86, 219, 0.25));
+}
+
 /* ─── Register-only: role cards ──────────────────── */
 .role-group {
   display: grid;

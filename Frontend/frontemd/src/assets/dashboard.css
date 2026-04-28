@@ -95,6 +95,25 @@ body::before {
   animation: page-in 0.55s cubic-bezier(0.22,1,0.36,1) both;
 }
 
+.dash-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+}
+
+.dash-main > * {
+  position: relative;
+  z-index: 1;
+}
+
 @keyframes page-in {
   from { opacity: 0; transform: translateY(22px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -105,6 +124,18 @@ body::before {
   align-items: flex-end;
   justify-content: space-between;
   margin-bottom: 2.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.dash-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(234,179,8,0.8), transparent);
 }
 
 .dash-greeting {
@@ -295,6 +326,18 @@ body::before {
   top: 0; left: 12%; right: 12%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border-md), transparent);
+}
+
+.panel::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  top: -120px;
+  right: -80px;
+  background: radial-gradient(circle, rgba(234,179,8,0.08) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .panel-title {

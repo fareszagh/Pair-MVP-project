@@ -62,7 +62,7 @@ export default function AvailableOffers({ offers,loading,selectedOffer,onSelect,
                 </span>
                 {onApply && (
                 <button className="btn-accept" onClick={(e)=>{e.stopPropagation();onApply(offer.id)}}
-                ></button>
+                >Apply</button>
                 ) }
               </div>
             </div>
