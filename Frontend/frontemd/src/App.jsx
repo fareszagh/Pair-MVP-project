@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom"
 import axios from "axios"
+import LandingPage from "./pages/LandingPage"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import Dashboard from "./pages/dashboard"
@@ -77,11 +78,12 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       {!token && (
         <>
           <Route path="/login" element={<Login handleLogin={handleLogin} error={error} />} />
           <Route path="/register" element={<Register handleRegister={handleRegister} error={error} />} />
-          <Route path="*" element={<Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </>
       )}
 
@@ -105,7 +107,7 @@ function App() {
             }
           />
 
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route path="*" element={<Navigate to={user.role === "transporter" ? "/transporter" : "/dashboard"} />} />
         </>
       )}
     </Routes>

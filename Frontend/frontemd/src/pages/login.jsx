@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi"
 import "../assets/login.css"
+import cargolinkLogo from "../assets/cargolink_logo.png"
 
 export default function Login({ handleLogin, error }) {
   const [email, setEmail]       = useState("")
@@ -26,7 +27,7 @@ export default function Login({ handleLogin, error }) {
 
       <div className="auth-shell">
         <div className="auth-brand">
-          <span className="brand-mark">C</span>
+          <img className="brand-logo" src={cargolinkLogo} alt="CargoLink logo" />
           <span className="brand-name">Cargo<em>Link</em></span>
         </div>
 

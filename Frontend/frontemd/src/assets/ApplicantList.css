@@ -38,6 +38,28 @@
   animation: app-in 0.4s cubic-bezier(0.22,1,0.36,1) both;
 }
 
+.applicant-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+}
+
+.applicant-card::after {
+  content: '';
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  bottom: -90px;
+  right: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 72%);
+  pointer-events: none;
+}
+
 .applicant-card:nth-child(1) { animation-delay: 0.04s; }
 .applicant-card:nth-child(2) { animation-delay: 0.09s; }
 .applicant-card:nth-child(3) { animation-delay: 0.14s; }

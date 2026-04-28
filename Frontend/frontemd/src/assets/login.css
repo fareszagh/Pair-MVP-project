@@ -90,6 +90,31 @@
   animation: rise 0.5s cubic-bezier(0.22,1,0.36,1) both;
 }
 
+.auth-shell::before,
+.auth-shell::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.auth-shell::before {
+  width: 140px;
+  height: 140px;
+  top: -36px;
+  left: -38px;
+  background: radial-gradient(circle, rgba(26,86,219,0.2) 0%, transparent 70%);
+}
+
+.auth-shell::after {
+  width: 120px;
+  height: 120px;
+  bottom: -24px;
+  right: -32px;
+  background: radial-gradient(circle, rgba(109,40,217,0.16) 0%, transparent 70%);
+}
+
 @keyframes rise {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -117,6 +142,15 @@
   justify-content: center;
 }
 
+.brand-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 10px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 8px 14px rgba(26, 86, 219, 0.25));
+}
+
 .brand-name {
   font-family: 'Syne', sans-serif;
   font-size: 20px;
@@ -138,6 +172,30 @@
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
   padding: 2.25rem 2rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-card::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(26,86,219,0.35), transparent);
+}
+
+.auth-card::after {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  top: -120px;
+  right: -100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,86,219,0.08) 0%, transparent 72%);
+  pointer-events: none;
 }
 
 /* ─── Header ─────────────────────────────────────── */

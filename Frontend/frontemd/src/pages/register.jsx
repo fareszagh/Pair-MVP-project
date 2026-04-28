@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FiMail, FiLock, FiUser, FiPhone, FiEye, FiEyeOff, FiTruck, FiCheckCircle } from "react-icons/fi"
 import "../assets/register.css"
+import cargolinkLogo from "../assets/cargolink_logo.png"
 
 export default function Register({ handleRegister, error }) {
   const [username, setUsername] = useState("")
@@ -29,7 +30,7 @@ export default function Register({ handleRegister, error }) {
 
       <div className="auth-shell">
         <div className="auth-brand">
-          <span className="brand-mark">C</span>
+          <img className="brand-logo" src={cargolinkLogo} alt="CargoLink logo" />
           <span className="brand-name">Cargo<em>Link</em></span>
         </div>
 
