@@ -4,7 +4,7 @@ import axios from "axios"
 import Login from "./pages/login"
 import Register from "./pages/register"
 import Dashboard from "./pages/dashboard"
-
+import Transporterdashboard from './pages/Transporterdashboard'
 
 function App() {
 
@@ -67,6 +67,7 @@ function App() {
         <>
 
           <Route path="/dashboard" element={<Dashboard  user={user} token={token} handleLogout={handleLogout} />} />
+          <Route path="/transporter" element={<Transporterdashboard user ={user} token ={token} handleLogout={handleLogout}/>}/>
           <Route path="/login" element={<Navigate to="/dashboard" />} />
           <Route path="/register" element={<Navigate to="/dashboard" />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
