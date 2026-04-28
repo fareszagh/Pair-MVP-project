@@ -66,7 +66,7 @@ function App() {
       {token && (
         <>
 
-          <Route path="/dashboard" element={<Dashboard user={user} handleLogout={handleLogout} />} />
+          <Route path="/dashboard" element={<Dashboard  user={user} token={token} handleLogout={handleLogout} />} />
           <Route path="/login" element={<Navigate to="/dashboard" />} />
           <Route path="/register" element={<Navigate to="/dashboard" />} />
           <Route path="*" element={<Navigate to="/dashboard" />} />
