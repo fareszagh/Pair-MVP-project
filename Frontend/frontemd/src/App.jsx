@@ -9,7 +9,7 @@ import Transporterdashboard from './pages/Transporterdashboard'
 function App() {
 
   const [token, setToken] = useState(localStorage.getItem("token"))
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
   const [error, setError] = useState("")
 
   const navigate = useNavigate()
@@ -35,11 +35,19 @@ function App() {
         email,
         password,
       })
+
       localStorage.setItem("token", data.token)
       localStorage.setItem("user", JSON.stringify(data.user))
+
       setToken(data.token)
       setUser(data.user)
-      navigate("/dashboard")
+
+      if (data.user.role === "transporter") {
+        navigate("/transporter")
+      } else {
+        navigate("/dashboard")
+      }
+
     } catch (err) {
       setError(err.response?.data?.message || "Login failed")
     }
@@ -51,6 +59,20 @@ function App() {
     setToken(null)
     setUser(null)
     navigate("/login")
+  }
+
+  function RoleRoute({ children, allowedRole, user }) {
+    if (!user) return <Navigate to="/login" />
+
+    if (user.role !== allowedRole) {
+      return (
+        <Navigate
+          to={user.role === "transporter" ? "/transporter" : "/dashboard"}
+        />
+      )
+    }
+
+    return children
   }
 
   return (
@@ -65,11 +87,24 @@ function App() {
 
       {token && (
         <>
+          <Route
+            path="/dashboard"
+            element={
+              <RoleRoute user={user} allowedRole="user">
+                <Dashboard user={user} token={token} handleLogout={handleLogout} />
+              </RoleRoute>
+            }
+          />
 
-          <Route path="/dashboard" element={<Dashboard  user={user} token={token} handleLogout={handleLogout} />} />
-          <Route path="/transporter" element={<Transporterdashboard user ={user} token ={token} handleLogout={handleLogout}/>}/>
-          <Route path="/login" element={<Navigate to="/dashboard" />} />
-          <Route path="/register" element={<Navigate to="/dashboard" />} />
+          <Route
+            path="/transporter"
+            element={
+              <RoleRoute user={user} allowedRole="transporter">
+                <Transporterdashboard user={user} token={token} handleLogout={handleLogout} />
+              </RoleRoute>
+            }
+          />
+
           <Route path="*" element={<Navigate to="/dashboard" />} />
         </>
       )}
