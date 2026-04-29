@@ -24,8 +24,9 @@ export default function Dashboard({ user, token, handleLogout }) {
             setLoadingOffers(true)
             try {
                 const { data } = await axios.get("http://localhost:3000/api/offer/getAll", authHeader)
-
-                const mine = data.filter(o => o.created_by === user.id)
+                
+                const mine = data.filter(o => o.created_by === Number(user.id))
+                
                 setOffers(mine)
                 if (mine.length > 0 && !selectedOffer) setSelectedOffer(mine[0])
             } catch (err) {
