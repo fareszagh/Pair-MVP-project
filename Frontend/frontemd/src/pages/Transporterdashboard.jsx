@@ -18,6 +18,7 @@ export default function Dashboard({ user, token, handleLogout }) {
   const [messageBody, setMessageBody] = useState("i can handle this offer");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [appliedOffers, setAppliedOffers] = useState([]);
   const authHeader = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export default function Dashboard({ user, token, handleLogout }) {
         { message: messageBody },
         authHeader,
       );
+      setAppliedOffers((prev) => [...prev, offerId]);
       setRefresh((prev) => !prev);
     } catch (error) {
       console.log(error);
@@ -169,6 +171,7 @@ export default function Dashboard({ user, token, handleLogout }) {
               selectedOffer={selectedOffer}
               onSelect={setSelectedOffer}
               onApply={handleApply}
+              appliedOffers={appliedOffers}
             />
           </div>
 
