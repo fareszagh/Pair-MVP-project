@@ -16,6 +16,8 @@ export default function Dashboard({ user, token, handleLogout }) {
   const [refresh, setRefresh] = useState(false);
   const [offerId, setOfferId] = useState(null);
   const [messageBody, setMessageBody] = useState("i can handle this offer");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
   const authHeader = { headers: { Authorization: `Bearer ${token}` } };
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function Dashboard({ user, token, handleLogout }) {
           authHeader,
         );
         setMyApplication(data);
-        console.log(myApplications)
+        console.log(myApplications);
       } catch (error) {
         console.log(error);
       } finally {
@@ -58,14 +60,14 @@ export default function Dashboard({ user, token, handleLogout }) {
   }, [refresh]);
 
   const handleApply = async (offerId) => {
-  try {
-    await applyToApplication(offerId, messageBody);
-  } catch (error) {
-    console.log(error);
-  }
-};
+    try {
+      await applyToApplication(offerId, messageBody);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const applyToApplication = async (offerId,messageBody) => {
+  const applyToApplication = async (offerId, messageBody) => {
     try {
       setOfferId(offerId);
       await axios.post(
@@ -79,10 +81,20 @@ export default function Dashboard({ user, token, handleLogout }) {
     }
   };
 
+  const handleSearch = async (Query) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3000/api/offer/applications/search?search=${Query}`,
+        authHeader,
+      );
+      setSearchResult(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const applied = myApplications.length;
-
   const accepted = myApplications.filter((a) => a.status === "accepted").length;
-
   const rejected = myApplications.filter((a) => a.status === "rejected").length;
 
   return (
@@ -104,13 +116,62 @@ export default function Dashboard({ user, token, handleLogout }) {
         />
 
         <div className="dash-body">
-          <AvailableOffer
-            offers={offers}
-            loading={loadingOffers}
-            selectedOffer={selectedOffer}
-            onSelect={setSelectedOffer}
-            onApply={handleApply}
-          />
+          <div className="offers-column">
+            {/* Search input — visual only, wire up to your backend logic */}
+            <div className="offer-search-wrapper">
+              <span className="offer-search-icon">
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              </span>
+              <input
+                className="offer-search-input"
+                type="text"
+                placeholder="Search offers…"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              {searchQuery && (
+                <button
+                  className="offer-search-clear"
+                  onClick={() => handleSearch(searchQuery)}
+                  aria-label="Clear search"
+                >
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </button>
+              )}
+            </div>
+
+            <AvailableOffer
+              offers={searchResult.length > 0 ? searchResult : offers}
+              loading={loadingOffers}
+              selectedOffer={selectedOffer}
+              onSelect={setSelectedOffer}
+              onApply={handleApply}
+            />
+          </div>
+
           <MyApplications
             applications={myApplications}
             loading={loadingOffers}

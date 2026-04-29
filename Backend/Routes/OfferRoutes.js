@@ -1,6 +1,6 @@
 import {Router} from "express"
 import AuthMiddleware from "../Middleware/authMiddleware.js"
-import { createOffer, getAllOffers, getOfferById, removeOffer, updateOffer } from "../Controllers/offerController.js"
+import { createOffer, getAllOffers, getOfferById, removeOffer, searchOffer, updateOffer } from "../Controllers/offerController.js"
 import {
   createOfferApplication,
   getMyOfferApplications,
@@ -20,5 +20,5 @@ router.post("/:offerId/applications",AuthMiddleware,createOfferApplication)
 router.delete("/delete/:id",AuthMiddleware,removeOffer)
 router.patch("/update/:id",AuthMiddleware,updateOffer)
 router.patch("/application/:id",AuthMiddleware,updateOfferApplication)
-
+router.get("/applications/search",AuthMiddleware,searchOffer)
 export default router

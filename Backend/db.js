@@ -31,7 +31,8 @@ db.Offer.belongsToMany(db.User, {
   through: db.OfferApp,
   foreignKey: "offer_id"
 });
-
+db.Offer.hasMany(db.OfferApp,{foreignKey:"offer_id"})
+db.OfferApp.belongsTo(db.Offer,{foreignKey:"offer_id"})
 
 
 

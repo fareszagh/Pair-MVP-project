@@ -18,6 +18,7 @@ export default function Login({ handleLogin, error }) {
   }
 
   return (
+    
     <div className="auth-page">
       <div className="app-bg">
         <div className="bg-circle c1" />
