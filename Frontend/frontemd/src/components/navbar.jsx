@@ -1,10 +1,11 @@
 import "../assets/navbar.css"
+import cargolinkLogo from "../assets/cargolink_logo.png"
 
 export default function Navbar({ user, handleLogout }) {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <span className="brand-mark">C</span>
+        <img className="brand-logo" src={cargolinkLogo} alt="CargoLink logo" />
         <span className="brand-name">Cargo<em>Link</em></span>
       </div>
       <div className="navbar-right">
