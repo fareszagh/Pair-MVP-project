@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom"
 import axios from "axios"
 import LandingPage from "./pages/LandingPage"
@@ -12,8 +12,14 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem("token"))
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
   const [error, setError] = useState("")
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark")
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    document.body.classList.toggle("light-theme", theme === "light")
+    localStorage.setItem("theme", theme)
+  }, [theme])
 
   const handleRegister = async (username, email, password, phone_number, role) => {
     try {
@@ -77,40 +83,51 @@ function App() {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      {!token && (
-        <>
-          <Route path="/login" element={<Login handleLogin={handleLogin} error={error} />} />
-          <Route path="/register" element={<Register handleRegister={handleRegister} error={error} />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </>
-      )}
+    <>
+      <button
+        type="button"
+        className="theme-toggle"
+        onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+        aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+      >
+        {theme === "dark" ? "Light" : "Dark"}
+      </button>
 
-      {token && (
-        <>
-          <Route
-            path="/dashboard"
-            element={
-              <RoleRoute user={user} allowedRole="user">
-                <Dashboard user={user} token={token} handleLogout={handleLogout} />
-              </RoleRoute>
-            }
-          />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        {!token && (
+          <>
+            <Route path="/login" element={<Login handleLogin={handleLogin} error={error} />} />
+            <Route path="/register" element={<Register handleRegister={handleRegister} error={error} />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
+        )}
 
-          <Route
-            path="/transporter"
-            element={
-              <RoleRoute user={user} allowedRole="transporter">
-                <Transporterdashboard user={user} token={token} handleLogout={handleLogout} />
-              </RoleRoute>
-            }
-          />
+        {token && (
+          <>
+            <Route
+              path="/dashboard"
+              element={
+                <RoleRoute user={user} allowedRole="user">
+                  <Dashboard user={user} token={token} handleLogout={handleLogout} />
+                </RoleRoute>
+              }
+            />
 
-          <Route path="*" element={<Navigate to={user.role === "transporter" ? "/transporter" : "/dashboard"} />} />
-        </>
-      )}
-    </Routes>
+            <Route
+              path="/transporter"
+              element={
+                <RoleRoute user={user} allowedRole="transporter">
+                  <Transporterdashboard user={user} token={token} handleLogout={handleLogout} />
+                </RoleRoute>
+              }
+            />
+
+            <Route path="*" element={<Navigate to={user.role === "transporter" ? "/transporter" : "/dashboard"} />} />
+          </>
+        )}
+      </Routes>
+    </>
   )
 }
 
